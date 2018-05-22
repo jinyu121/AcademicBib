@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# This project
+cache/
+RESULT/*.pdf
