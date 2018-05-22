@@ -8,6 +8,12 @@ In general, you can use `python main.py NAME YEAR` to download the bibtex file, 
 
 WE DO NOT RECOMMEND TO DOWNLOAD PDF FILES IF NOT NECESSARY.
 
+## Supported List
+
++ CVPR
++ ICCV
++ NIPS
+
 ## Downloaded files
 
 You can get the bibtex files [there](https://drive.google.com/open?id=1_Z-Ce6FFeu9rIx5ZXMDKqgYHYBf1blCi). 
