@@ -8,9 +8,10 @@ import os
 import urllib.request
 from time import sleep
 
+import bibtexparser
 from tqdm import tqdm
 
-from util import bib_add_item, get_html_content
+from util import get_html_content
 
 
 def parse_cvf(args):
@@ -35,7 +36,7 @@ def parse_cvf(args):
         for paper_url, bib_data, pdf_url in tqdm(zip(jar_abs, jar_bib, jar_pdf)):
 
             # Get bib
-            bib_data = bib_data.text.replace('<br>', "").strip()
+            bib_data = bibtexparser.loads(bib_data.text.replace('<br>', "").strip())
 
             # Get abstract
             if args.abstract:
@@ -44,8 +45,8 @@ def parse_cvf(args):
                     abstract_path = os.path.join(
                         args.cache_dir, args.full_name, os.path.split(abstract_url)[-1])
                     abstract_html = get_html_content(abstract_url, abstract_path)
-                    abstract = abstract_html.find(id="abstract").text
-                    bib_data = bib_add_item(bib_data, "abstract", abstract, pos=-2)
+                    abstract = abstract_html.find(id="abstract").text.strip()
+                    bib_data.entries[0]["abstract"] = abstract
                 except Exception as e:
                     print(paper_url.a.text)
                     print(e)
@@ -54,11 +55,10 @@ def parse_cvf(args):
             pdf_url = os.path.join(BASE_URL, pdf_url['href'])
             pdf_filename = os.path.split(pdf_url)[-1]
             pdf_path = os.path.join('pdf_{}'.format(args.full_name), pdf_filename)
-            bib_data = bib_add_item(bib_data, 'url', pdf_url, pos=-2)
+            bib_data.entries[0]["url"] = pdf_url
             if args.pdf:
                 try:
-                    bib_data = bib_add_item(
-                        bib_data, 'file', "{}:{}:application/pdf".format(pdf_filename, pdf_path), pos=-2)
+                    bib_data.entries[0]["file"] = "{}:{}:application/pdf".format(pdf_filename, pdf_path)
                     pdf_path = os.path.join(args.save_dir, pdf_path)
                     if not os.path.exists(pdf_path):
                         urllib.request.urlretrieve(pdf_url, pdf_path)
@@ -68,5 +68,5 @@ def parse_cvf(args):
                     print(e)
 
             # Save
-            f.write(bib_data + "\n")
+            f.write(bibtexparser.dumps(bib_data))
             tqdm.write(paper_url.a.text)

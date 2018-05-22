@@ -11,12 +11,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def bib_add_item(bib, key, value, pos=-1):
-    bib = bib.split("\n")
-    bib.insert(pos, "{key}={{{val}}},".format(key=key, val=value))
-    return "\n".join(bib)
-
-
 def get_html_content(url, cache=None, sleep_time=1):
     if cache and os.path.exists(cache):
         with open(cache, "r") as f:

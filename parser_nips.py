@@ -9,10 +9,11 @@ import os
 import urllib.request
 from time import sleep
 
+import bibtexparser
 import requests
 from tqdm import tqdm
 
-from util import bib_add_item, get_html_content
+from util import get_html_content
 
 
 def parse_nips(args):
@@ -52,13 +53,13 @@ def parse_nips(args):
                 # Get bib
                 bib = main_content.find('a', text=["[BibTeX]"])['href'].strip().strip('/')
                 bib_url = os.path.join(BASE_URL, bib)
-                bib_data = requests.get(bib_url, timeout=10, allow_redirects=True).text.strip()
+                bib_data = bibtexparser.loads(requests.get(bib_url, timeout=10, allow_redirects=True).text.strip())
 
                 # Get abstract
                 if args.abstract:
                     abstract = one_detail.find('p', class_="abstract").text.strip()
                     if abstract != "Abstract Missing":
-                        bib_data = bib_add_item(bib_data, 'abstract', abstract)
+                        bib_data.entries[0]["abstract"] = abstract
 
                 # Get pdf
                 if args.pdf:
@@ -67,8 +68,7 @@ def parse_nips(args):
                         pdf_filename = os.path.split(pdf)[-1]
                         pdf_url = os.path.join(BASE_URL, pdf)
                         pdf_path = os.path.join('pdf_{}'.format(args.full_name), pdf_filename)
-                        bib_data = bib_add_item(
-                            bib_data, 'file', "{}:{}:application/pdf".format(pdf_filename, pdf_path))
+                        bib_data.entries[0]["file"] = "{}:{}:application/pdf".format(pdf_filename, pdf_path)
                         pdf_path = os.path.join(args.save_dir, pdf_path)
                         if not os.path.exists(pdf_path):
                             urllib.request.urlretrieve(pdf_url, pdf_path)
@@ -78,7 +78,7 @@ def parse_nips(args):
                         print(e)
 
                 # Save
-                f.write(bib_data + "\n")
+                f.write(bibtexparser.dumps(bib_data))
                 tqdm.write(one_paper.a.text)
 
             except Exception as e:
