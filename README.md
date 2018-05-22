@@ -4,17 +4,9 @@ Bored with searching bibtex one-by-one? This script can download ALL bibtex and 
 
 ## How to use
 
-In general, you can use `python parser_XXX.py YEAR` to download the bibtex file, use parameter `-a` to download the abstract, and use parameter `-p` to download PDF files.
+In general, you can use `python main.py NAME YEAR` to download the bibtex file, use parameter `-a` to download the abstract, and use parameter `-p` to download PDF files.
 
 WE DO NOT RECOMMEND TO DOWNLOAD PDF FILES IF NOT NECESSARY.
-
-For more information, just use `python parser_XXX.py`.
-
-| Conference | File | 
-| :---: | :---: |  :---: | 
-| CVPR | `parser_cvf.py` | 
-| ICCV | `parser_cvf.py` | 
-| NIPS | `parser_nips.py` | 
 
 ## Downloaded files
 

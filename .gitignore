@@ -106,4 +106,4 @@ venv.bak/
 # This project
 .idea/
 cache/
-RESULT/*.pdf
+RESULT/

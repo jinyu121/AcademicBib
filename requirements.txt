@@ -1,4 +1,6 @@
 beautifulsoup4
+bibtexparser
+easydict
 html5lib
 requests
 tqdm
