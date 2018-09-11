@@ -21,6 +21,7 @@ config = EasyDict(
 PARSERS = {
     "CVPR": parse_cvf,
     "ICCV": parse_cvf,
+    "ECCV": parse_cvf,
     "NIPS": parse_nips
 }
 

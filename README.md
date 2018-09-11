@@ -10,9 +10,10 @@ WE DO NOT RECOMMEND TO DOWNLOAD PDF FILES IF NOT NECESSARY.
 
 ## Supported List
 
-+ CVPR
-+ ICCV
-+ NIPS
++ CVPR 2013-
++ ICCV 2013-
++ ECCV 2018
++ NIPS 1987-
 
 ## Downloaded files
 
