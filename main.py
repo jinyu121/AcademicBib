@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 from easydict import EasyDict
 
 from parser_cvf import parse_cvf
+from parser_iclr import parse_iclr
 from parser_nips import parse_nips
 
 config = EasyDict(
@@ -22,7 +23,8 @@ PARSERS = {
     "CVPR": parse_cvf,
     "ICCV": parse_cvf,
     "ECCV": parse_cvf,
-    "NIPS": parse_nips
+    "NIPS": parse_nips,
+    "ICLR": parse_iclr,
 }
 
 
